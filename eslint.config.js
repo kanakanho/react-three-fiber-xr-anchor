@@ -22,13 +22,6 @@ export default tseslint.config(
       'react/forbid-elements': 'error',
       'react/forbid-foreign-prop-types': 'error',
       'react/forbid-prop-types': 'error',
-      'react/function-component-definition': [
-        'error',
-        {
-          namedComponents: 'arrow-function',
-          unnamedComponents: 'function-declaration',
-        },
-      ],
       'react/hook-use-state': 'error',
       'react/iframe-missing-sandbox': 'error',
       'react/jsx-child-element-spacing': 'error',

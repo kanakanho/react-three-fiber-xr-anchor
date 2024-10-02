@@ -12,7 +12,7 @@ const XRSpaceAnchor = () => {
       if (inputSource == null) {
         return;
       }
-      requestAnchor({ relativeTo: 'space', space: inputSource.targetRaySpace });
+      requestAnchor({ relativeTo: 'world', worldPosition: [0, 0, 0], worldQuaternion: [0, 0, 0, 0] });
     },
     [requestAnchor, inputSource],
   );

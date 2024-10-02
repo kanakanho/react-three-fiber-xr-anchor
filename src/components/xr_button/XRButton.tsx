@@ -5,7 +5,7 @@ type Props = {
   store: XRStore;
 };
 
-const XRButton = ({ store }: Props) =>  {
+const XRButton = ({ store }: Props) => {
   return (
     <div className={styles.xrButtonContainer}>
       <button className={styles.xrButton} onClick={() => store.enterAR()}>
@@ -13,6 +13,6 @@ const XRButton = ({ store }: Props) =>  {
       </button>
     </div>
   );
-}
+};
 
 export default XRButton;
