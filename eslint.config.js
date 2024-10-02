@@ -25,8 +25,8 @@ export default tseslint.config(
       'react/function-component-definition': [
         'error',
         {
-          namedComponents: 'function-declaration',
-          unnamedComponents: 'arrow-function',
+          namedComponents: 'arrow-function',
+          unnamedComponents: 'function-declaration',
         },
       ],
       'react/hook-use-state': 'error',
