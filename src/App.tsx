@@ -23,11 +23,7 @@ function App() {
             <p>{cameraControlRef.current?.getPosition(outPosition).toArray().toString()}</p>
           </Html>
           <CameraControls ref={cameraControlRef} />
-          <XRSpaceAnchor
-            position={
-              cameraControlRef.current ? cameraControlRef.current?.getPosition(outPosition) : new Vector3(0, 0, 0)
-            }
-          />
+          <XRSpaceAnchor />
         </XR>
       </Canvas>
     </div>

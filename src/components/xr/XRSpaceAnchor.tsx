@@ -1,11 +1,7 @@
 import { useXRAnchor, useXRInputSourceEvent, useXRInputSourceState, XRSpace } from '@react-three/xr';
 import { Quaternion, Vector3 } from 'three';
 
-type Props = {
-  position: Vector3;
-};
-
-const XRSpaceAnchor = ({ position }: Props) => {
+const XRSpaceAnchor = () => {
   const [anchor, requestAnchor] = useXRAnchor();
 
   const handState = useXRInputSourceState('hand', 'right');
@@ -17,7 +13,11 @@ const XRSpaceAnchor = ({ position }: Props) => {
       if (inputSource == null) {
         return;
       }
-      requestAnchor({ relativeTo: 'world', worldPosition: position, worldQuaternion: new Quaternion(0, 0, 0, 0) });
+      requestAnchor({
+        relativeTo: 'world',
+        worldPosition: new Vector3(0, 0, 0),
+        worldQuaternion: new Quaternion(0, 0, 0, 0),
+      });
     },
     [requestAnchor, inputSource],
   );
