@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 import { Vector3 } from 'three';
 import XRSpaceHtmlAnchor from '../html/XRSpaceHtmlAnchor';
 import XRSpaceAnchor from '../xr/XRSpaceAnchor';
+import PostMinio from '@/util/PostMinio';
 
 const XRCanvas = () => {
   const cameraControlRef = useRef<CameraControls | null>(null);
@@ -17,7 +18,8 @@ const XRCanvas = () => {
         const date = new Date(parseInt(unixTime));
         const ymd = date.toLocaleDateString('ja-JP');
         const time = date.toLocaleTimeString('ja-JP', { hour12: false });
-        return `${ymd} ${time},${x},${y},${z}`;
+        const m_sec = date.getMilliseconds();
+        return `${ymd} ${time} ${m_sec},${x},${y},${z}`;
       })
       .join('\n')}`;
     const blob = new Blob([csvContent], { type: 'text/csv' });
@@ -25,6 +27,8 @@ const XRCanvas = () => {
     link.href = URL.createObjectURL(blob);
     link.download = 'positions.csv';
     link.click();
+
+    PostMinio(blob);
   };
 
   useFrame(() => {
