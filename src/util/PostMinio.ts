@@ -31,7 +31,8 @@ const PostMinio = async (data: Blob) => {
   });
 
   if (!response.ok) {
-    await alert(response.text());
+    const responseText = await response.text();
+    alert(responseText);
     throw new Error('Failed to upload to Minio');
   }
 
