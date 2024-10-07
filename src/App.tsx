@@ -1,9 +1,9 @@
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas } from '@react-three/fiber';
 import { createXRStore, XR } from '@react-three/xr';
 import styles from './App.module.css';
 import XRButton from './components/xr_button/XRButton';
 import { CameraControls, Html } from '@react-three/drei';
-import { useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import XRSpaceAnchor from './components/xr/XRSpaceAnchor';
 import { Vector3 } from 'three';
 import XRSpaceHtmlAnchor from './components/html/XRSpaceHtmlAnchor';
@@ -12,15 +12,18 @@ const store = createXRStore();
 
 function App() {
   const cameraControlRef = useRef<CameraControls | null>(null);
-  const outPosition = new Vector3();
+  const outPosition = useMemo(() => new Vector3(), []);
   const [positions, setPositions] = useState<string[]>([]);
 
-  useFrame(() => {
+  useEffect(() => {
     if (cameraControlRef.current) {
       cameraControlRef.current.getPosition(outPosition);
-      setPositions((prevPositions) => [...prevPositions, `${Date.now()},${outPosition.x},${outPosition.y},${outPosition.z}`]);
+      setPositions((prevPositions) => [
+        ...prevPositions,
+        `${Date.now()},${outPosition.x},${outPosition.y},${outPosition.z}`,
+      ]);
     }
-  });
+  }, [cameraControlRef, outPosition]);
 
   const handleSave = () => {
     const csvContent = `time,x,y,z\n${positions
