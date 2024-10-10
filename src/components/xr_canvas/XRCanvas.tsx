@@ -2,9 +2,8 @@ import { CameraControls, Html } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { useRef, useState } from 'react';
 import { Vector3 } from 'three';
-import XRSpaceHtmlAnchor from '../html/XRSpaceHtmlAnchor';
-import XRSpaceAnchor from '../xr/XRSpaceAnchor';
 import PostMinio from '@/util/PostMinio';
+import XRSpaceHand from '../xr_space_hand/XRSpaceHand';
 
 const XRCanvas = () => {
   const cameraControlRef = useRef<CameraControls | null>(null);
@@ -41,15 +40,17 @@ const XRCanvas = () => {
     }
   });
 
+  const [handWristPosition, setHandWristPosition] = useState<number | null>(null);
+
   return (
     <>
       <Html>
         <button onClick={handleSave}>カメラの位置を保存</button>
         <p>{positions[positions.length - 1]}</p>
+        <p>{handWristPosition}</p>
       </Html>
       <CameraControls ref={cameraControlRef} />
-      <XRSpaceAnchor />
-      <XRSpaceHtmlAnchor />
+      <XRSpaceHand setHandWristPosition={setHandWristPosition} />
     </>
   );
 };
