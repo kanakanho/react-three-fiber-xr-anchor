@@ -40,17 +40,17 @@ const XRCanvas = () => {
     }
   });
 
-  const [handWristPosition, setHandWristPosition] = useState<number | null>(null);
+  const [handPosition, setHandPosition] = useState<Vector3>(new Vector3(0, 0, 0));
 
   return (
     <>
       <Html>
         <button onClick={handleSave}>カメラの位置を保存</button>
         <p>{positions[positions.length - 1]}</p>
-        <p>{handWristPosition}</p>
+        <p>{handPosition}</p>
       </Html>
       <CameraControls ref={cameraControlRef} />
-      <XRSpaceHand setHandWristPosition={setHandWristPosition} />
+      <XRSpaceHand setHandPosition={setHandPosition} />
     </>
   );
 };

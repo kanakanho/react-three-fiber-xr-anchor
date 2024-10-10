@@ -4,10 +4,10 @@ import React from 'react';
 import { Quaternion, Vector3 } from 'three';
 
 type Props = {
-  setHandWristPosition: React.Dispatch<React.SetStateAction<number | null>>;
+  setHandPosition: React.Dispatch<React.SetStateAction<Vector3>>;
 };
 
-const XRSpaceHand = ({ setHandWristPosition }: Props) => {
+const XRSpaceHand = ({ setHandPosition }: Props) => {
   const [anchor, requestAnchor] = useXRAnchor();
 
   const handState = useXRInputSourceState('hand', 'right');
@@ -32,9 +32,11 @@ const XRSpaceHand = ({ setHandWristPosition }: Props) => {
     return null;
   }
 
+  const outHandPosition = new Vector3(0, 0, 0);
+
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useFrame(() => {
-    setHandWristPosition(handState?.inputSource.hand.WRIST ?? null);
+    setHandPosition(handState?.object?.getWorldPosition(outHandPosition) ?? new Vector3(0, 0, 0));
   });
 
   return <XRSpace space={anchor.anchorSpace} />;
