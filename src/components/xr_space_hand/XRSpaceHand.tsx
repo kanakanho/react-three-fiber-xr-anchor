@@ -1,3 +1,4 @@
+import { Html } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { useXRAnchor, useXRInputSourceEvent, useXRInputSourceState, XRSpace } from '@react-three/xr';
 import React from 'react';
@@ -39,7 +40,17 @@ const XRSpaceHand = ({ setHandPosition }: Props) => {
     setHandPosition(handState?.object?.getWorldPosition(outHandPosition) ?? new Vector3(0, 0, 0));
   });
 
-  return <XRSpace space={anchor.anchorSpace} />;
+  return (
+    <XRSpace space={anchor.anchorSpace}>
+      <Html position={[0, 1, 0]}>
+        <div style={{ backgroundColor: 'white' }}>
+          <p style={{ fontSize: '3rem' }}>{handState?.object?.position.x}</p>
+          <p style={{ fontSize: '3rem' }}>{handState?.object?.position.y}</p>
+          <p style={{ fontSize: '3rem' }}>{handState?.object?.position.z}</p>
+        </div>
+      </Html>
+    </XRSpace>
+  );
 };
 
 export default XRSpaceHand;
