@@ -25,7 +25,7 @@ const XRCanvas = () => {
     const blob = new Blob([csvContent], { type: 'text/csv' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = 'positions.csv';
+    link.download = 'camera-positions.csv';
     link.click();
 
     PostMinio(blob);
@@ -44,7 +44,7 @@ const XRCanvas = () => {
   return (
     <>
       <Html>
-        <button onClick={handleSave}>保存</button>
+        <button onClick={handleSave}>カメラの位置を保存</button>
         <p>{positions[positions.length - 1]}</p>
       </Html>
       <CameraControls ref={cameraControlRef} />
