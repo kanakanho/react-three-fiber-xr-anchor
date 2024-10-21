@@ -5,7 +5,11 @@ import { Vector3 } from 'three';
 import PostMinio from '@/util/PostMinio';
 import XRSpaceHand from '../xr_space_hand/XRSpaceHand';
 
-const XRCanvas = () => {
+type Props = {
+  url: string;
+};
+
+const XRCanvas = ({ url }: Props) => {
   const cameraControlRef = useRef<CameraControls | null>(null);
   const outPosition = new Vector3(0, 0, 0);
   const [positions, setPositions] = useState<string[]>([]);
@@ -50,7 +54,7 @@ const XRCanvas = () => {
         <p>{handPosition}</p>
       </Html>
       <CameraControls ref={cameraControlRef} />
-      <XRSpaceHand setHandPosition={setHandPosition} />
+      <XRSpaceHand setHandPosition={setHandPosition} url={url} />
     </>
   );
 };

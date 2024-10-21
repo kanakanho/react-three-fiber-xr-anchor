@@ -1,3 +1,4 @@
+import useWebSocket from '@/hooks/useWebSocket';
 import { Text } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { useXRAnchor, useXRInputSourceEvent, useXRInputSourceState, XRSpace } from '@react-three/xr';
@@ -5,10 +6,19 @@ import React from 'react';
 import { Quaternion, Vector3 } from 'three';
 
 type Props = {
+  url: string;
   setHandPosition: React.Dispatch<React.SetStateAction<Vector3>>;
 };
 
-const XRSpaceHand = ({ setHandPosition }: Props) => {
+const XRSpaceHand = ({ url, setHandPosition }: Props) => {
+  const { isOpened, socketRef } = useWebSocket(`${url}/api/ws`);
+
+  useFrame(() => {
+    if (isOpened) {
+      socketRef.current?.send(handState?.object?.getWorldPosition(outHandPosition).toArray().join(',') ?? '');
+    }
+  });
+
   const [anchor, requestAnchor] = useXRAnchor();
 
   const handState = useXRInputSourceState('hand', 'right');
@@ -43,10 +53,13 @@ const XRSpaceHand = ({ setHandPosition }: Props) => {
   return (
     <XRSpace space={anchor.anchorSpace}>
       <group>
-        <Text position={new Vector3(0, 1, 0)} fontSize={0.1} color="white">
+        <Text position={new Vector3(1, 1, 1)} fontSize={1} color="white">
           {handState?.object?.getWorldPosition(outHandPosition).toArray().join(',')}
         </Text>
       </group>
+      <mesh pointerEventsType={{ deny: 'grab' }} position={[0, 0, 0]}>
+        <boxGeometry />
+      </mesh>
     </XRSpace>
   );
 };
