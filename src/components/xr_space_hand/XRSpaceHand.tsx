@@ -13,21 +13,17 @@ type Props = {
 const XRSpaceHand = ({ url, setHandPosition }: Props) => {
   const { isOpened, socketRef } = useWebSocket(`${url}/api/ws`);
 
+  const [count, setCount] = useState(0);
   const [positions, setPositions] = useState<string[]>([]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (positions.length > 0 && isOpened) {
-        socketRef.current?.send(positions.join(';'));
-        setPositions([]);
-      }
-    }, 60000); // 1分ごとに送信
-
-    return () => clearInterval(interval);
-  }, [positions, isOpened, socketRef]);
 
   useFrame(() => {
     if (isOpened) {
+      setCount((prevCount) => prevCount + 1);
+      if (count > 120) {
+        socketRef.current?.send(JSON.stringify(positions));
+        setCount(0);
+        setPositions([]);
+      }
       const position = handState?.object?.getWorldPosition(outHandPosition).toArray().join(',') ?? '';
       setPositions((prevPositions) => [...prevPositions, position]);
     }
