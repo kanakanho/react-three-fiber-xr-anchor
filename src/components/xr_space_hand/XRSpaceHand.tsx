@@ -2,7 +2,7 @@ import useWebSocket from '@/hooks/useWebSocket';
 import { Text } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { useXRAnchor, useXRInputSourceEvent, useXRInputSourceState, XRSpace } from '@react-three/xr';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Quaternion, Vector3 } from 'three';
 
 type Props = {
@@ -13,9 +13,23 @@ type Props = {
 const XRSpaceHand = ({ url, setHandPosition }: Props) => {
   const { isOpened, socketRef } = useWebSocket(`${url}/api/ws`);
 
+  const [positions, setPositions] = useState<string[]>([]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (positions.length > 0 && isOpened) {
+        socketRef.current?.send(positions.join(';'));
+        setPositions([]);
+      }
+    }, 60000); // 1分ごとに送信
+
+    return () => clearInterval(interval);
+  }, [positions, isOpened, socketRef]);
+
   useFrame(() => {
     if (isOpened) {
-      socketRef.current?.send(handState?.object?.getWorldPosition(outHandPosition).toArray().join(',') ?? '');
+      const position = handState?.object?.getWorldPosition(outHandPosition).toArray().join(',') ?? '';
+      setPositions((prevPositions) => [...prevPositions, position]);
     }
   });
 
