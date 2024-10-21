@@ -2,7 +2,7 @@ import useWebSocket from '@/hooks/useWebSocket';
 import { Text } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { useXRAnchor, useXRInputSourceEvent, useXRInputSourceState, XRSpace } from '@react-three/xr';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Quaternion, Vector3 } from 'three';
 
 type Props = {
