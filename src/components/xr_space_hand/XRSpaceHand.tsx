@@ -67,6 +67,7 @@ const XRSpaceHand = ({ url, setHandPosition }: Props) => {
           {handState?.object?.getWorldPosition(outHandPosition).toArray().join(',')}
         </Text>
       </group>
+      {/* eslint-disable-next-line react/no-unknown-property */}
       <mesh pointerEventsType={{ deny: 'grab' }} position={[0, 0, 0]}>
         <boxGeometry />
       </mesh>

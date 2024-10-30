@@ -13,18 +13,6 @@ const useWebSocket = (url: string) => {
       setIsOpened(true);
     };
 
-    const onMessage = (event: MessageEvent) => {
-      // data が文字列であるか確認
-      if (typeof event.data === 'string') {
-        // data を文字列の配列に変換して state にセット
-        const strs: string[] = JSON.parse(event.data);
-        strs.map((str) => console.log(str));
-      } else {
-        console.error('Invalid data type');
-      }
-    };
-    ws.addEventListener('message', onMessage);
-
     const onClose = () => {
       const ws = new WebSocket(url);
       socketRef.current = ws;

@@ -20,7 +20,7 @@ const PostMinio = async (data: Blob) => {
   const ymd = date.toLocaleDateString('ja-JP');
   const time = date.toLocaleTimeString('ja-JP', { hour12: false });
 
-  formData.append('file', data, `positions_${ymd}_${time}.csv`);
+  formData.append('file', data, `${ymd}_${time}.json`);
 
   const response = await fetch(url, {
     method: 'POST',
@@ -31,12 +31,11 @@ const PostMinio = async (data: Blob) => {
   });
 
   if (!response.ok) {
-    const responseText = await response.text();
-    alert(responseText);
+    await alert(response.text());
     throw new Error('Failed to upload to Minio');
   }
 
-  alert('Uploaded to Minio');
+  console.log('Uploaded to Minio');
   return;
 };
 
