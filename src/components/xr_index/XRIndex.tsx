@@ -5,7 +5,7 @@ const XRIndex = () => {
   const [positionRef, quaternionRef] = useCameraPosition();
 
   const handleSave = () => {
-    const blobContent = new Blob([JSON.stringify(positionRef)+"\n"+JSON.stringify(quaternionRef)], {
+    const blobContent = new Blob([JSON.stringify(positionRef) + '\n' + JSON.stringify(quaternionRef)], {
       type: 'text/json',
     });
     PostMinio(blobContent);

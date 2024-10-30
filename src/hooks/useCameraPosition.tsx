@@ -5,7 +5,7 @@ import { Quaternion, Vector3 } from 'three';
 const vectorHelper = new Vector3();
 const quaternionHelper = new Quaternion();
 
-type TimeAndWorldPosition= {
+type TimeAndWorldPosition = {
   t: number;
   x: number;
   y: number;
@@ -27,8 +27,19 @@ const useCameraPosition = () => {
   useFrame(() => {
     camera.getWorldPosition(vectorHelper);
     camera.getWorldQuaternion(quaternionHelper);
-    positionRef.current.push({ t: new Date().getTime()/1000, x: vectorHelper.x, y: vectorHelper.y, z: vectorHelper.z });
-    quaternionRef.current.push({ t: new Date().getTime()/1000, x: quaternionHelper.x, y: quaternionHelper.y, z: quaternionHelper.z, w: quaternionHelper.w });
+    positionRef.current.push({
+      t: new Date().getTime() / 1000,
+      x: vectorHelper.x,
+      y: vectorHelper.y,
+      z: vectorHelper.z,
+    });
+    quaternionRef.current.push({
+      t: new Date().getTime() / 1000,
+      x: quaternionHelper.x,
+      y: quaternionHelper.y,
+      z: quaternionHelper.z,
+      w: quaternionHelper.w,
+    });
   });
 
   return [positionRef.current, quaternionRef.current] as const;
